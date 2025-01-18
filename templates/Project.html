@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Home - My App{% endblock %}
+
 {% block content %}
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-2" id="side-navbar" style="position: fixed; left: 0; top: 60px; height: 100%; background-color: #f8f9fa; padding-top: 20px;">
             <nav class="nav flex-column">
-                <a class="nav-link active" href="{{ url_for('uplode_project')}}">Uplode Project</a>
+                <a class="nav-link active" href="#section1">Section 1</a>
                 <a class="nav-link" href="#section2">Section 2</a>
                 <a class="nav-link" href="#section3">Section 3</a>
             </nav>
@@ -13,10 +13,7 @@
         <div class="col-md-1" id="spacer" style="width: 2%;"></div>
         <div class="col-md-9" style="margin-left: 14%;">
             <div class="container mt-5">
-                {% block upload_content %}
-                <p>You can upload files here.</p>
-            {% endblock %}
-                
+           <p> prodect page</p>
             {% endblock %}
         </div>
         </div>

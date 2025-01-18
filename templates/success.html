@@ -1,7 +1,9 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h2>Details Submitted Successfully!</h2>
-<p>Thank you for submitting your details.</p>
-<a href="/">Go back to the form</a>
-{% endblock %}
+{% extends "base.html" %} <!-- Extends the base template -->
+{% block title %}Success{% endblock %} <!-- Sets the title of the page -->
+{% block content %} <!-- Start of the content block -->
+<div class="container mt-5">
+    <h2>Details Submitted Successfully!</h2> <!-- Heading for the success message -->
+    <p>Thank you for submitting your details.</p> <!-- Paragraph with a thank you message -->
+    <a href="/" class="btn btn-primary">Go back to the form</a> <!-- Link to go back to the form -->
+</div>
+{% endblock %} <!-- End of the content block -->

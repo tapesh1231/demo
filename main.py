@@ -11,12 +11,12 @@ print(secrets.token_hex(16))
 
 print(pymysql.__version__)
 
+# Initialize the Flask application
 app = Flask(__name__)
 app.secret_key = 'a-secure-random-generated-key'
 
 # Configuration for the database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Tapesh%400811@localhost:3306/student_db'
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize the database and login manager
@@ -39,13 +39,14 @@ def create_database():
 # Call the function to create the database if not present
 create_database()
 
-# signup table
+# Define the Signup model
 class Signup(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     
+# Define the UserDetails model
 class UserDetails(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -56,11 +57,13 @@ class UserDetails(db.Model):
     skills = db.relationship('Skill', backref='user_details', lazy=True)
     education = db.relationship('Education', backref='user_details', lazy=True)
 
+# Define the Skill model
 class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     skill = db.Column(db.String(100), nullable=False)
     user_details_id = db.Column(db.Integer, db.ForeignKey('user_details.id'), nullable=False)
 
+# Define the Education model
 class Education(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     level = db.Column(db.String(50), nullable=False)
@@ -70,22 +73,21 @@ class Education(db.Model):
     year = db.Column(db.String(10), nullable=False)
     user_details_id = db.Column(db.Integer, db.ForeignKey('user_details.id'), nullable=False)
 
-
 # Create the database tables if they don't exist
 with app.app_context():
     db.create_all()
 
+# User loader function for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
-    return Signup.query.get(int(user_id))
+    return db.session.get(Signup, int(user_id))
 
+# Home route
 @app.route('/')
 def home():
     return render_template('index.html')
 
-from flask_login import login_user, login_required
-
-# Ensure login is successful and the user session is set properly
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -101,7 +103,7 @@ def login():
             flash('Invalid credentials, please try again.', 'danger')
     return render_template('login.html')
 
-
+# Signup route
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
@@ -124,7 +126,7 @@ def signup():
     
     return render_template('signup.html')
 
-
+# User details route
 @app.route('/user-details', methods=['GET', 'POST'])
 @login_required
 def user_details():
@@ -171,6 +173,7 @@ def user_details():
 
     return render_template('form.html', name=name, email=email)
 
+# Portfolio route
 @app.route('/portfolio')
 @login_required
 def portfolio():
@@ -180,16 +183,18 @@ def portfolio():
     education = Education.query.filter_by(user_details_id=user_details.id).all()
     return render_template('portfolio.html', user_details=user_details, skills=skills, education=education)
 
-
-
-
-
-
+# Dashboard route
 @app.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('dashboard.html')
 
+@app.route('/project')
+
+def project():
+    return render_template('project.html')
+
+# Logout route
 @app.route('/logout')
 @login_required
 def logout():
@@ -197,5 +202,13 @@ def logout():
     flash('You have been logged out!', 'info')
     return redirect(url_for('home'))
 
+#subnav
+
+@app.route('/uplode_project')
+@login_required
+def uplode_project():
+    return render_template('uplode_project.html')
+
+# Main function to run the Flask application
 if __name__ == '__main__':
     app.run(debug=True)

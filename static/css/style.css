@@ -1,0 +1,81 @@
+/* Custom styles for responsiveness */
+
+/* Section title styles */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    margin: 0;
+    background-color: black !important;
+    color: white !important;
+    top: 0; /* Added to move the navbar up */
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+#side-navbar {
+    background-color: rgb(237, 228, 228) !important;
+    color: white !important;
+}
+
+#side-navbar .nav-link {
+    color: rgb(234, 24, 24) !important;
+}
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* Card styles */
+.card {
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Portfolio header styles */
+.portfolio-header {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* Portfolio content styles */
+.portfolio-content {
+    margin-top: 30px;
+}
+
+/* Animation for fade-in effect */
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Form styles */
+.form-label {
+    margin-bottom: 0.5rem;
+}
+.form-control {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+
