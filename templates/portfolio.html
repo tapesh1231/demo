@@ -1,52 +1,151 @@
-{% extends "base.html" %}
-{% block title %}Portfolio{% endblock %}
-{% block content %}
-<div class="container portfolio-content">
-    <!-- Portfolio Header -->
-    <div class="portfolio-header text-center">
-        <h2 class="display-4">{{ user_details.name }}</h2>
-        <p class="lead">{{ user_details.email }}</p>
-        <p>{{ user_details.bio }}</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/portfolio.css') }}" />
+    <title>My Portfolio</title>
+  </head>
 
-    <!-- Skills Section -->
-    <div class="section-title">
-        <h3>Skills</h3>
+  <body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <div class="pre-loader">
+      <i class="fas fa-spinner loader"></i>
     </div>
-    <div class="row">
+    <button class="day">
+      <i class="fa-sharp fa-solid fa-code-compare"></i>
+    </button>
+    <button class="night"><i class="fas fa-moon"></i></button>
+    <header>
+      <nav class="navbar">
+        <h1>
+          <a href="{{ url_for('home') }}" class="logo"
+            >Hii<span class="lio">there</span>
+          </a>
+        </h1>
+        <ul class="nav">
+          <li><a class="nav-btn1 active" href="#about">About</a></li>
+          <li><a class="nav-btn2" href="#skills">Skills</a></li>
+          <li><a class="nav-btn3" href="#portfolio">Projects</a></li>
+          <li><a class="nav-btn4" href="#services">Services</a></li>
+          <li><a class="nav-btn5" href="#contact">Contact-Us</a></li>
+        </ul>
+        <i class="ham-btn fas fa-bars"></i>
+      </nav>
+
+      <div class="row sec-dis">
+        <div class="heading">
+          <h3 style="margin-bottom: 10px">I'm</h3>
+          <h1><span>{{ user_details.name }}</span></h1>
+          <h4><span style="color: aqua">Software</span> Developer</h4>
+          <p>{{ user_details.bio }}</p>
+          <button class="btnn">Hire Me</button>
+        </div>
+        <div class="header-img">
+          <img
+            src="{{ url_for('static', filename='uploads/profile_image/' ~ (user_details.profile_image.split(',')[0] if user_details.profile_image else 'default.jpg')) }}"
+            alt="{{ user_details.name }}"
+            class="profile-image"
+            style="
+              border-radius: 10px;
+              background-color: transparent;
+              filter: brightness(80%) contrast(90%);
+            "
+          />
+        </div>
+        <div class="effects">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="section skills" id="skills">
+      <h1 class="section-title">Expertise</h1>
+      <p class="section-desc">
+        I have handfull experience in following skills and still learning
+        and practicing more and more.
+      </p>
+      <div class="skill-container">
         {% for skill in skills %}
-            <div class="col-md-4">
-                <div class="card fade-in">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ skill.skill }}</h5>
-                    </div>
-                </div>
-            </div>
+        <div class="skill">
+          <i class="fas fa-palette"></i>
+          <h1>{{ skill.skill }}</h1>
+          <p>
+            I value simple content structure, clean design patterns, and
+            thoughtful interactions.
+          </p>
+        </div>
         {% endfor %}
-    </div>
+      </div>
+    </section>
 
-    <!-- Education Section -->
-    <div class="section-title">
-        <h3>Education</h3>
-    </div>
-    <div class="row">
-        {% for edu in education %}
-            <div class="col-md-6">
-                <div class="card fade-in">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ edu.level }} in {{ edu.subject }}</h5>
-                        <p class="card-text">Stream: {{ edu.stream if edu.stream else 'N/A' }}</p>
-                        <p class="card-text">Grade: {{ edu.grade }}</p>
-                        <p class="card-text">Year of Passing: {{ edu.year }}</p>
-                    </div>
-                </div>
+    <section class="section portfolios" id="portfolio">
+      <h1 class="section-title">Projects</h1>
+      <p class="section-desc">
+        Here are a few design projects I've worked on recently. Want to see
+        more? <a href="#">Email me: {{ user_details.email }}</a>.
+      </p>
+      <div class="portfolio-container">
+        <div class="row">
+          {% for project in projects %}
+          <div class="col-md-4 col-sm-6 mb-4">
+            <div class="card">
+              <img src="{{ url_for('static', filename='uploads/' ~ project.images.split(',')[0]) }}" class="card-img-top" alt="{{ project.title }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.overview }}</p>
+                <a href="{{ url_for('project_detail', project_id=project.id) }}" class="btn btn-primary">Get detail</a>
+              </div>
             </div>
-        {% endfor %}
-    </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
 
-    <!-- Logout Button -->
-    <div class="text-center mt-4">
-        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
-    </div>
-</div>
-{% endblock %}
+    <section class="section services" id="services">
+      <h1 class="section-title">Services</h1>
+      <p class="section-desc">
+        I'm a bit of a digital product junky. Over the years, I've used
+        hundreds of web and mobile apps in different industries and
+        verticals.
+      </p>
+      <div class="services-container">
+        <div class="service">
+          <i class="fas fa-fast-forward"></i>
+          <h1>Fast</h1>
+          <p>
+            Fast load times and lag free interaction, my highest priority.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <h1 class="section-title">Contact</h1>
+      <p class="section-desc">
+        Have a question or want to work together? Contact me now or send a
+        email <a href="mailto:{{ user_details.email }}">here</a>.
+      </p>
+      <div class="contact-container">
+        <form class="contact-form">
+          <input type="text" placeholder="Full Name" />
+          <input type="email" placeholder="Email Address" />
+          <input type="text" placeholder="Subject" />
+          <textarea name="message" placeholder="Message Here..."></textarea>
+          <button class="btn">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/portfolio.js') }}"></script>
+  </body>
+</html>

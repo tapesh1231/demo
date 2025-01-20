@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Enter Your Details</h2>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <!-- Name and Email in one line -->
         <div class="row mb-3">
             <div class="col-md-6">
@@ -33,6 +33,14 @@
             <div class="col-12">
                 <label for="bio" class="form-label">Bio:</label>
                 <textarea id="bio" name="bio" class="form-control"></textarea>
+            </div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <label for="profile_image" class="form-label">Upload Profile Image:</label>
+                <input type="file" id="profile_image" name="profile_image" class="form-control" accept="image/*">
             </div>
         </div>
 

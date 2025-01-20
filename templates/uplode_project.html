@@ -1,59 +1,72 @@
 {% extends "dashboard.html" %}
 
 {% block upload_content %}
-    <div class="container">
-        <h1>Upload Project</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="projectTitle">Project Title:</label>
-                <input type="text" id="projectTitle" name="projectTitle" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="projectOverview">Project Overview:</label>
-                <textarea id="projectOverview" name="projectOverview" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="projectObjectives">Project Objectives:</label>
-                <textarea id="projectObjectives" name="projectObjectives" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="requiredComponents">Required Components:</label>
-                <textarea id="requiredComponents" name="requiredComponents" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="circuitDiagram">Circuit Diagram:</label>
-                <input type="file" id="circuitDiagram" name="circuitDiagram" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="workingPrinciple">Working Principle:</label>
-                <textarea id="workingPrinciple" name="workingPrinciple" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="code">Code:</label>
-                <textarea id="code" name="code" class="form-control" rows="10" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="stepByStepGuide">Step-by-Step Guide:</label>
-                <textarea id="stepByStepGuide" name="stepByStepGuide" class="form-control" rows="10" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="images">Images:</label>
-                <input type="file" id="images" name="images" class="form-control" multiple required>
-            </div>
-            <div class="form-group">
-                <label for="video">Video:</label>
-                <input type="file" id="video" name="video" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="applications">Applications:</label>
-                <textarea id="applications" name="applications" class="form-control" rows="5" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="challenges">Challenges & Troubleshooting:</label>
-                <textarea id="challenges" name="challenges" class="form-control" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Upload Project</button>
-        </form>
-    </div>
-
-    {% endblock %}
+<div class="container">
+    <h1>Upload Project</h1>
+    <form action="{{ url_for('uplode_project') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="projectTitle">Project Title:</label>
+            <input type="text" id="projectTitle" name="projectTitle" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="projectOverview">Project Overview:</label>
+            <textarea id="projectOverview" name="projectOverview" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="projectObjectives">Project Objectives:</label>
+            <textarea id="projectObjectives" name="projectObjectives" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="requiredComponents">Required Components:</label>
+            <table class="table" id="componentsTable">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Quantity</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" name="components[]" class="form-control" required></td>
+                        <td><input type="number" name="quantities[]" class="form-control" required></td>
+                        <td><input type="text" name="descriptions[]" class="form-control" required></td>
+                        <td><button type="button" class="btn btn-danger remove-component">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-secondary" id="addComponent">Add Component</button>
+        </div>
+        <div class="form-group">
+            <label for="circuitDiagram">Circuit Diagram:</label>
+            <input type="file" id="circuitDiagram" name="circuitDiagram" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="workingPrinciple">Working Principle:</label>
+            <textarea id="workingPrinciple" name="workingPrinciple" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="code">Code:</label>
+            <textarea id="code" name="code" class="form-control" rows="10" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="stepByStepGuide">Step-by-Step Guide:</label>
+            <textarea id="stepByStepGuide" name="stepByStepGuide" class="form-control" rows="10" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="images">Images:</label>
+            <input type="file" id="images" name="images" class="form-control" multiple required>
+        </div>
+        <div class="form-group">
+            <label for="applications">Applications:</label>
+            <textarea id="applications" name="applications" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="challenges">Challenges & Troubleshooting:</label>
+            <textarea id="challenges" name="challenges" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Project</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,31 +1,82 @@
 {% extends "base.html" %}
 {% block title %}Home - My App{% endblock %}
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-2" id="side-navbar" style="position: fixed; left: 0; top: 60px; height: 100%; background-color: #f8f9fa; padding-top: 20px;">
-            <nav class="nav flex-column">
-                <a class="nav-link active" href="{{ url_for('uplode_project')}}">Uplode Project</a>
-                <a class="nav-link" href="#section2">Section 2</a>
-                <a class="nav-link" href="#section3">Section 3</a>
-            </nav>
+
+<!--side bar-->
+<div class="sidebar">
+    <nav class="nav flex-column">
+        <a class="nav-link" href="{{ url_for('uplode_project')}}">
+            <span class="icon">
+                <i class="bi bi-upload"></i>
+            </span> 
+            <span class="description">Upload project</span> 
+        </a>
+        <a class="nav-link" href="#">
+            <span class="icon">
+                <i class="bi bi-pencil-square"></i>
+            </span> 
+            <span class="description">Edit project</span></a>
+        <a class="nav-link" href="#">
+            <span class="icon">
+                <i class="bi bi-file-earmark-check"></i>
+            </span> 
+            <span class="description">Coming soon</span></a>
+      
+        <!-- menu for dropdown-->
+        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenu" aria-expanded="false" aria-controls="submenu">
+            <span class="icon">
+                <i class="bi bi-pencil-square"></i>
+            </span> 
+            <span class="description">Product <i class="bi bi-caret-down-fill"></i></span>
+        </a>
+
+        <div class="collapse" id="submenu">
+            <a class="nav-link" href="#">
+                <span class="icon"></span>
+                    <i class="bi bi-6-circle-fill"></i>
+                </span>
+                <span class="description">Submenu item 1</span>
+            </a>
+            <a class="nav-link" href="#">Submenu item 2</a>
+            <a class="nav-link" href="#">Submenu item 3</a>
         </div>
-        <div class="col-md-1" id="spacer" style="width: 2%;"></div>
-        <div class="col-md-9" style="margin-left: 14%;">
-            <div class="container mt-5">
-                {% block upload_content %}
-                <p>You can upload files here.</p>
-            {% endblock %}
-                
-            {% endblock %}
-        </div>
-        </div>
-    </div>
+    </nav>
 </div>
 
+<!--main-->
+<main class="main-content">
+    <div class="col-md-9 col-sm-8">
+        <h2>Your Projects</h2>
+        <div class="card-container">
+            <div class="row">
+                {% for project in projects %}
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='uploads/' ~ project.images.split(',')[0]) }}" class="card-img-top" alt="{{ project.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.overview }}</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="pagination">
+            <button class="btn btn-secondary" id="prev-page" style="display: none;">Previous Page</button>
+            <button class="btn btn-secondary" id="next-page" style="display: none;">Next Page</button>
+        </div>
+        {% block upload_content %}
+        <p>You can upload files here.</p>
+        {% endblock %}
+        {% endblock %}
+    </div>
+   
+</main>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/static/js/dashboard.js"></script>
+
+
 
 
